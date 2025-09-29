@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel de Administração - Açaí do Mirante</title>
+
+    <style>
+        body { background-color: #f4f4f9; }
+        .admin-container { max-width: 900px; margin: 40px auto; padding: 20px; background: #fff; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .admin-section { margin-bottom: 40px; padding-bottom: 20px; border-bottom: 2px solid #eee; }
+        .admin-section:last-child { border-bottom: none; }
+        .admin-form { display: flex; flex-direction: column; gap: 15px; margin-bottom: 30px; }
+        .admin-form.inline-form { flex-direction: row; align-items: flex-end; }
+        .admin-form.inline-form .form-group { flex: 1; }
+        .admin-form input, .admin-form textarea { width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 6px; font-size: 1rem; }
+        .admin-form label { border: none; padding: 0; margin-bottom: -5px; font-weight: 600; font-size: 0.9em; color: #555;}
+        .admin-form button { padding: 12px; font-size: 1rem; }
+        .addons-checklist { border: 1px solid #ccc; border-radius: 6px; padding: 10px; max-height: 150px; overflow-y: auto; }
+        .addons-checklist label { display: block; margin-bottom: 5px; font-weight: normal; font-size: 1rem; color: #333;}
+        .product-table { width: 100%; border-collapse: collapse; margin-top: 20px;}
+        .product-table th, .product-table td { padding: 12px; border: 1px solid #ddd; text-align: left; vertical-align: middle; }
+        .product-table th { background-color: var(--secondary-color); }
+        .product-table img.product-thumbnail { width: 60px; height: 60px; object-fit: cover; border-radius: 4px; }
+        .product-table .actions button { padding: 5px 10px; margin-right: 5px; font-size: 0.9rem; border-radius: 5px; }
+        .btn-edit { background-color: #ffc107; }
+        .btn-delete { background-color: #dc3545; color: white; }
+    </style>
+</head>
+<body>
+    <div class="admin-container">
+        <h2>Painel de Administração</h2>
+        
+        <div class="admin-section">
+            <h3>Gerenciar Produtos</h3>
+            <form id="product-form" class="admin-form">
+                <input type="hidden" id="product-id">
+                <input type="text" id="product-name" placeholder="Nome do Produto" required>
+                <input type="number" id="product-price" placeholder="Preço (ex: 16.50)" step="0.01" required>
+                <input type="text" id="product-category" placeholder="Categoria" required>
+                <textarea id="product-description" placeholder="Descrição" rows="3"></textarea>
+                <input type="text" id="product-image" placeholder="Cole aqui a URL da imagem" required>
+                
+                <label>Adicionais Disponíveis para este Produto</label>
+                <div id="product-addons-checklist" class="addons-checklist">
+                    <p>Carregando adicionais...</p>
+                </div>
+
+                <button type="submit" class="btn primary-btn">Salvar Produto</button>
+            </form>
+            <table class="product-table">
+                <thead><tr><th>Imagem</th><th>Nome</th><th>Categoria</th><th>Preço</th><th>Ações</th></tr></thead>
+                <tbody id="product-list-body"></tbody>
+            </table>
+        </div>
+
+        <div class="admin-section">
+            <h3>Gerenciar Adicionais (Lista Mestra)</h3>
+            <form id="addon-form" class="admin-form inline-form">
+                <input type="hidden" id="addon-id">
+                <div class="form-group"><label for="addon-name">Nome do Adicional</label><input type="text" id="addon-name" required></div>
+                <div class="form-group"><label for="addon-price">Preço (R$)</label><input type="number" id="addon-price" step="0.01" required></div>
+                <button type="submit" class="btn primary-btn">Salvar Adicional</button>
+            </form>
+            <table class="product-table">
+                <thead><tr><th>Adicional</th><th>Preço</th><th>Ações</th></tr></thead>
+                <tbody id="addon-list-body"></tbody>
+            </table>
+        </div>
+        
+        <div class="admin-section">
+            <h3>Gerenciar Taxas de Entrega</h3>
+            <form id="fee-form" class="admin-form inline-form">
+                <input type="hidden" id="fee-id">
+                <div class="form-group"><label for="fee-neighborhood">Bairro</label><input type="text" id="fee-neighborhood" required></div>
+                <div class="form-group"><label for="fee-value">Taxa (R$)</label><input type="number" id="fee-value" step="0.01" required></div>
+                <button type="submit" class="btn primary-btn">Salvar Taxa</button>
+            </form>
+            <table class="product-table">
+                <thead><tr><th>Bairro</th><th>Taxa</th><th>Ações</th></tr></thead>
+                <tbody id="fee-list-body"></tbody>
+            </table>
+        </div>
+    </div>
+
+    <script type="module" src="admin.js"></script>
+</body>
+</html>
